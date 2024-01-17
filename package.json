@@ -1,7 +1,7 @@
 {
   "name": "renovate",
   "description": "Automated dependency updates. Flexible so you don't need to be.",
-  "version": "0.0.0-semantic-release",
+  "version": "1.0.0",
   "type": "commonjs",
   "bin": {
     "renovate": "dist/renovate.js",
@@ -45,7 +45,6 @@
     "prettier": "prettier --cache --check '**/*.{ts,js,mjs,json,md,yml}'",
     "prettier-fix": "prettier --write --cache '**/*.{ts,js,mjs,json,md,yml}'",
     "release:prepare": "ts-node tools/generate-docs.ts",
-    "release:publish": "node tools/release.mjs",
     "start": "ts-node lib/renovate.ts",
     "test": "run-s lint test-schema jest",
     "test-dirty": "git diff --exit-code",
@@ -264,7 +263,6 @@
     "@ls-lint/ls-lint": "2.2.2",
     "@openpgp/web-stream-tools": "0.0.14",
     "@renovate/eslint-plugin": "file:tools/eslint",
-    "@semantic-release/exec": "6.0.3",
     "@swc/core": "1.3.102",
     "@types/auth-header": "1.0.6",
     "@types/aws4": "1.11.6",
@@ -338,7 +336,6 @@
     "nyc": "15.1.0",
     "pretty-format": "29.7.0",
     "rimraf": "5.0.5",
-    "semantic-release": "22.0.12",
     "tar": "6.2.0",
     "tmp-promise": "3.0.3",
     "ts-jest": "29.1.1",
