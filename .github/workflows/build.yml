@@ -122,7 +122,7 @@ jobs:
           FILTER_SHARDS: ${{ github.event.pull_request.draft && 'true' || '' }}
           CHANGED_FILES: ${{ steps.changed-files.outputs.changed-files }}
         run: |
-          echo "$(yarn -s schedule-test-shards)" >> "$GITHUB_OUTPUT"
+          echo "$(yarn schedule-test-shards)" >> "$GITHUB_OUTPUT"
 
   prefetch:
     needs: [setup]
