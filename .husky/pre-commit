@@ -3,7 +3,7 @@
 # shellcheck source=/dev/null
 . "$(dirname "$0")/_/husky.sh"
 
-pnpm ls-lint
+yarn ls-lint
 
 BRANCH_NAME=$(git branch --show-current)
 

@@ -16,6 +16,7 @@ import {
 } from '../../../../constants/error-messages';
 import { logger, removeMeta } from '../../../../logger';
 import { getAdditionalFiles } from '../../../../modules/manager/npm/post-update';
+import { runWebhook } from '../../../../modules/manager/plural/webhook';
 import { Pr, platform } from '../../../../modules/platform';
 import { ensureComment, ensureCommentRemoval } from '../../../../modules/platform/comment';
 import { scm } from '../../../../modules/platform/scm';
@@ -45,7 +46,6 @@ import { handleClosedPr, handleModifiedPr } from './handle-existing';
 import { shouldReuseExistingBranch } from './reuse';
 import { isScheduledNow } from './schedule';
 import { setConfidence, setStability } from './status-checks';
-import { runWebhook } from './webhook';
 
 async function rebaseCheck(
   config: RenovateConfig,

@@ -1,7 +1,7 @@
-import { GlobalConfig } from '../../../../config/global';
-import { logger } from '../../../../logger';
-import type { Pr } from '../../../../modules/platform';
-import type { BranchConfig } from '../../../types';
+import { GlobalConfig } from '../../../config/global';
+import { logger } from '../../../logger';
+import type { BranchConfig } from '../../../workers/types';
+import type { Pr } from '../../platform';
 
 function runWebhook(config: BranchConfig, branchPr: Pr | null): void {
   if (!branchPr) {
