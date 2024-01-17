@@ -59,6 +59,7 @@ export const CategoryNames: Record<Category, string> = {
   rust: 'Rust',
   swift: 'Swift',
   terraform: 'Terraform',
+  plural: 'Plural',
 };
 
 export async function generateManagers(

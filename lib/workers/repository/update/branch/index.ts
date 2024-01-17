@@ -18,7 +18,10 @@ import { logger, removeMeta } from '../../../../logger';
 import { getAdditionalFiles } from '../../../../modules/manager/npm/post-update';
 import { runWebhook } from '../../../../modules/manager/plural/webhook';
 import { Pr, platform } from '../../../../modules/platform';
-import { ensureComment, ensureCommentRemoval } from '../../../../modules/platform/comment';
+import {
+  ensureComment,
+  ensureCommentRemoval,
+} from '../../../../modules/platform/comment';
 import { scm } from '../../../../modules/platform/scm';
 import { ExternalHostError } from '../../../../types/errors/external-host-error';
 import { getElapsedMs } from '../../../../util/date';
@@ -436,7 +439,7 @@ export async function processBranch(
         result: 'no-work',
       };
     }
-      // if the base branch has been changed by user in renovate config, rebase onto the new baseBranch
+    // if the base branch has been changed by user in renovate config, rebase onto the new baseBranch
     // we have already confirmed earlier that branch isn't modified, so its safe to use targetBranch here
     else if (
       branchPr?.targetBranch &&

@@ -20,7 +20,9 @@ function generatePRLink(sourceRepo: string, prNumber: number): string {
     case 'github':
       return `https://github.com/${sourceRepo}/pull/${prNumber}`;
     case 'gitlab':
-      return `${new URL(endpoint!).hostname}/${sourceRepo}/-/merge_requests/${prNumber}`;
+      return `${
+        new URL(endpoint!).hostname
+      }/${sourceRepo}/-/merge_requests/${prNumber}`;
   }
 
   throw new Error(`Unsupported platform: ${platform}`);

@@ -1,12 +1,23 @@
 import { logger } from '../../../logger';
 import { HelmDatasource } from '../../datasource/helm';
 import { parseRepository } from '../helmv3/utils';
-import type { PackageDependency, PackageFile, PackageFileContent } from '../types';
+import type {
+  PackageDependency,
+  PackageFile,
+  PackageFileContent,
+} from '../types';
 import { lookupRepository, toResources, toServices } from './matcher';
-import type { PluralConfig, PluralFile, PluralResource, ServiceDeployment } from './types';
+import type {
+  PluralConfig,
+  PluralFile,
+  PluralResource,
+  ServiceDeployment,
+} from './types';
 
-function resolveDependencies(services: Array<ServiceDeployment>): Array<PackageDependency> {
-  return services.map(service => {
+function resolveDependencies(
+  services: Array<ServiceDeployment>,
+): Array<PackageDependency> {
+  return services.map((service) => {
     const result: PackageDependency = {
       depName: service.spec.helm.chart,
       currentValue: service.spec.helm.version,
@@ -51,8 +62,8 @@ async function extractAllPackageFiles(
   const resources = await toResources(files);
 
   return resources
-    .filter(resource => !!resource.services.length)
-    .map(resource => ({
+    .filter((resource) => !!resource.services.length)
+    .map((resource) => ({
       packageFile: resource.fileName,
       datasource: HelmDatasource.id,
       deps: resolveDependencies(resource.services),

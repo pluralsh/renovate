@@ -6,7 +6,7 @@ interface PluralFile extends PluralFileContent {
 }
 
 interface PluralFileContent {
-  content: string
+  content: string;
 }
 
 interface PluralResource extends PluralFile {
@@ -21,59 +21,58 @@ const ResourceKind = {
 
 interface ServiceDeployment extends PluralFileContent {
   apiVersion: string;
-  kind: typeof ResourceKind[keyof typeof ResourceKind];
+  kind: (typeof ResourceKind)[keyof typeof ResourceKind];
   metadata: {
-    name: string
-    namespace: string
+    name: string;
+    namespace: string;
   };
   spec: {
-    namespace: string
+    namespace: string;
     git: {
-      folder: string
-      ref: string
-    }
+      folder: string;
+      ref: string;
+    };
     repositoryRef: {
-      kind: string
-      name: string
-      namespace: string
-    }
+      kind: string;
+      name: string;
+      namespace: string;
+    };
     helm: {
-      version: string
-      chart: string
-      valuesFiles: Array<string>
+      version: string;
+      chart: string;
+      valuesFiles: Array<string>;
       repository: {
-        namespace: string
-        name: string
-      }
-    }
+        namespace: string;
+        name: string;
+      };
+    };
     clusterRef: {
-      kind: string
-      name: string
-      namespace: string
-    }
+      kind: string;
+      name: string;
+      namespace: string;
+    };
   };
 }
 
 interface HelmRepository extends PluralFileContent {
   apiVersion: string;
-  kind: typeof ResourceKind[keyof typeof ResourceKind];
+  kind: (typeof ResourceKind)[keyof typeof ResourceKind];
   metadata: {
-    name: string
-    namespace: string
+    name: string;
+    namespace: string;
   };
   spec: {
-    interval: string
-    url: string
+    interval: string;
+    url: string;
   };
 }
 
-interface PluralConfig extends CustomExtractConfig, ManagerConfig {
-}
+interface PluralConfig extends CustomExtractConfig, ManagerConfig {}
 
 type RegExpGroups<T extends string> =
   | (RegExpMatchArray & {
-  groups?: { [name in T]: string } | { [key: string]: string };
-})
+      groups?: { [name in T]: string } | { [key: string]: string };
+    })
   | null;
 
 export type {
