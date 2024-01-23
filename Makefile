@@ -1,6 +1,6 @@
 LOG_LEVEL ?= info
 RENOVATE_CONFIG_FILE ?= example/config.json
-IMG ?= renovate:latest
+IMG ?= plural-renovate:latest
 
 ifndef RENOVATE_TOKEN
 $(error $$RENOVATE_TOKEN environment variable must be set)

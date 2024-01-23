@@ -38,7 +38,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           # list of Docker images to use as base name for tags
-          images: ghcr.io/pluralsh/renovate
+          images: ghcr.io/pluralsh/plural-renovate
           # generate Docker tags based on the following events/attributes
           tags: |
             type=semver,pattern={{version}}
@@ -81,3 +81,13 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           generate_release_notes: true
+
+      - name: Push Chart to GHCR
+        uses: appany/helm-oci-chart-releaser@v0.3.0
+        with:
+          name: plural-renovate
+          repository: pluralsh/renovate
+          tag: ${{ github.ref }}
+          registry: ghcr.io
+          registry_username: ${{ github.repository_owner }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
