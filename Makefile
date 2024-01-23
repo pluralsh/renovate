@@ -37,3 +37,21 @@ docker-run:
 .PHONY: docker-build
 docker-build:
 	docker build -t ${IMG} .
+
+.PHONY: install
+install:
+	@helm upgrade \
+		--install \
+		--set config.renovate.token=${RENOVATE_TOKEN} \
+		--set config.plural.token=${RENOVATE_API_TOKEN} \
+		plural-renovate \
+		charts/plural-renovate
+
+
+.PHONY: install-oci
+install-oci:
+	@helm upgrade \
+		--install \
+		plural-renovate \
+		oci://ghcr.io/pluralsh/plural-renovate \
+    --version 1.0.1-helm

@@ -5,11 +5,13 @@ image:
   tag: ""
 
 config:
+  restartPolicy: "Never"
   # Cron schedule: run once every 30 minutes
   # Create your own schedule with: https://crontab.guru/
-  schedule: 30 * * * *
+  schedule: 1/2 * * * *
   # Renovate configuration
   renovate:
+    configFile: /config/config.json
     # Platform to use, i.e.: github, gitlab, etc.
     platform: "github"
     #
