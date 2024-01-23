@@ -55,5 +55,9 @@ export function coerceRestPr(pr: GhRestPr): GhPr {
     result.targetBranch = pr.base.ref;
   }
 
+  if (pr.url) {
+    result.url = pr.url;
+  }
+
   return result;
 }

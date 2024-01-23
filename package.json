@@ -59,7 +59,8 @@
     "update-static-data": "run-s 'update-static-data:*'",
     "update-static-data:distro-info": "node tools/static-data/generate-distro-info.mjs",
     "update-static-data:node-schedule": "node tools/static-data/generate-node-schedule.mjs",
-    "verify": "node tools/verify.mjs"
+    "verify": "node tools/verify.mjs",
+    "graphql:codegen": "graphql-codegen --config codegen.yml"
   },
   "repository": {
     "type": "git",
@@ -143,6 +144,7 @@
     "node": "^18.12.0 || >=20.0.0"
   },
   "dependencies": {
+    "@apollo/client": "3.8.9",
     "@aws-sdk/client-codecommit": "3.363.0",
     "@aws-sdk/client-ec2": "3.363.0",
     "@aws-sdk/client-ecr": "3.363.0",
@@ -229,6 +231,7 @@
     "p-throttle": "4.1.1",
     "parse-link-header": "2.0.0",
     "prettier": "3.1.1",
+    "react": "18.2.0",
     "redis": "4.6.12",
     "remark": "13.0.0",
     "remark-github": "10.1.0",
@@ -254,6 +257,13 @@
     "re2": "1.20.9"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "5.0.0",
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/introspection": "4.0.0",
+    "@graphql-codegen/named-operations-object": "^3.0.0",
+    "@graphql-codegen/typescript": "4.0.1",
+    "@graphql-codegen/typescript-operations": "4.0.1",
+    "@graphql-codegen/typescript-react-apollo": "4.1.0",
     "@hyrious/marshal": "0.3.2",
     "@jest/environment": "29.7.0",
     "@jest/globals": "29.7.0",
@@ -295,6 +305,7 @@
     "@types/node": "18.19.8",
     "@types/parse-link-header": "2.0.3",
     "@types/prettier": "2.7.3",
+    "@types/react": "^18",
     "@types/semver": "7.5.6",
     "@types/semver-stable": "3.0.2",
     "@types/semver-utils": "1.1.3",

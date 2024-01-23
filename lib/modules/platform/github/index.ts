@@ -1230,7 +1230,7 @@ export async function findIssue(title: string): Promise<Issue | null> {
   }
   logger.debug(`Found issue ${issue.number}`);
   // TODO: can number be required? (#22198)
-  return getIssue(issue.number!);
+  return { ...issue, ...(await getIssue(issue.number!)) };
 }
 
 async function closeIssue(issueNumber: number): Promise<void> {

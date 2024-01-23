@@ -16,11 +16,12 @@ import type {
 
 function resolveDependencies(
   services: Array<ServiceDeployment>,
-): Array<PackageDependency> {
+): Array<PackageDependency<ServiceDeployment>> {
   return services.map((service) => {
-    const result: PackageDependency = {
+    const result: PackageDependency<ServiceDeployment> = {
       depName: service.spec.helm.chart,
       currentValue: service.spec.helm.version,
+      managerData: service,
     };
 
     const repository = lookupRepository(service);
@@ -32,7 +33,7 @@ function resolveDependencies(
     return {
       ...result,
       ...parseRepository(result.depName!, repository),
-    };
+    } as PackageDependency<ServiceDeployment>;
   });
 }
 
@@ -41,6 +42,7 @@ function extractPackageFile(
   packageFile: string,
 ): PackageFileContent<PluralResource> | null {
   logger.debug({ packageFile }, 'plural.extractPackageFile');
+
   const file: PluralFile = { fileName: packageFile, content };
   const services = toServices(file)?.services;
 
@@ -55,12 +57,12 @@ function extractPackageFile(
 }
 
 async function extractAllPackageFiles(
-  _: PluralConfig,
+  _config: PluralConfig,
   files: string[],
 ): Promise<Array<PackageFile<PluralResource>> | null> {
   logger.debug('plural.extractAllPackageFiles');
-  const resources = await toResources(files);
 
+  const resources = await toResources(files);
   return resources
     .filter((resource) => !!resource.services.length)
     .map((resource) => ({

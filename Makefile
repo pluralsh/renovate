@@ -17,6 +17,13 @@ run:
 	 RENOVATE_CONFIG_FILE=${RENOVATE_CONFIG_FILE} \
 	 node dist/renovate.js
 
+.PHONY: start
+start:
+	@LOG_LEVEL=${LOG_LEVEL} \
+	 RENOVATE_TOKEN=${RENOVATE_TOKEN} \
+	 RENOVATE_CONFIG_FILE=${RENOVATE_CONFIG_FILE} \
+	 yarn start
+
 .PHONY: docker-run
 docker-run:
 	@docker run \

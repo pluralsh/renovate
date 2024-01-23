@@ -2,7 +2,11 @@ import is from '@sindresorhus/is';
 import { GlobalConfig } from '../../config/global';
 import type { RenovateConfig } from '../../config/types';
 import { logger } from '../../logger';
-import type { PackageFile } from '../../modules/manager/types';
+import { plural } from '../../modules/manager/plural/callback';
+import type {
+  PackageDependency,
+  PackageFile,
+} from '../../modules/manager/types';
 import { platform } from '../../modules/platform';
 import { GitHubMaxPrBodyLen } from '../../modules/platform/github';
 import { regEx } from '../../util/regex';
@@ -458,6 +462,11 @@ export async function ensureDependencyDashboard(
       confidential: config.confidential,
     });
   }
+
+  await plural.onDependencyDashboardUpdate(
+    await platform.findIssue(config.dependencyDashboardTitle!),
+    branches as Array<PackageDependency>,
+  );
 }
 
 function getFooter(config: RenovateConfig): string {

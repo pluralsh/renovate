@@ -62,6 +62,7 @@ export interface GhRestPr {
   assignees?: { login?: string }[];
   requested_reviewers?: { login?: string }[];
   labels?: { name: string }[];
+  url?: URL;
   _links?: unknown;
 }
 

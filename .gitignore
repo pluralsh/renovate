@@ -36,3 +36,6 @@ test/datasource/nuget/_fixtures/obj
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# gql
+graphql.config.yml

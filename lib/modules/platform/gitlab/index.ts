@@ -726,7 +726,7 @@ export async function createPr({
   }
   const description = sanitize(rawDescription);
   logger.debug(`Creating Merge Request: ${title}`);
-  const res = await gitlabApi.postJson<Pr & { iid: number }>(
+  const res = await gitlabApi.postJson<Pr & { iid: number; web_url: URL }>(
     `projects/${config.repository}/merge_requests`,
     {
       body: {
@@ -743,6 +743,7 @@ export async function createPr({
   const pr = res.body;
   pr.number = pr.iid;
   pr.sourceBranch = sourceBranch;
+  pr.url = pr.web_url;
   // istanbul ignore if
   if (config.prList) {
     config.prList.push(pr);
@@ -1023,7 +1024,7 @@ export async function getIssueList(): Promise<GitlabIssue[]> {
       state: 'opened',
     });
     const res = await gitlabApi.getJson<
-      { iid: number; title: string; labels: string[] }[]
+      { iid: number; title: string; labels: string[]; web_url: URL }[]
     >(`projects/${config.repository}/issues?${query}`, {
       memCache: false,
       paginate: true,
@@ -1037,6 +1038,7 @@ export async function getIssueList(): Promise<GitlabIssue[]> {
       iid: i.iid,
       title: i.title,
       labels: i.labels,
+      web_url: i.web_url,
     }));
   }
   return config.issueList;
@@ -1071,7 +1073,7 @@ export async function findIssue(title: string): Promise<Issue | null> {
     if (!issue) {
       return null;
     }
-    return await getIssue(issue.iid);
+    return { ...{ url: issue.web_url }, ...(await getIssue(issue.iid)) };
   } catch (err) /* istanbul ignore next */ {
     logger.warn('Error finding issue');
     return null;

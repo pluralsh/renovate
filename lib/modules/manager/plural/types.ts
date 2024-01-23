@@ -1,5 +1,16 @@
 import type { ManagerConfig } from '../../../config/types';
+import type { BranchConfig } from '../../../workers/types';
+import type { Issue, Pr } from '../../platform';
 import type { CustomExtractConfig } from '../custom/types';
+import type { PackageDependency } from '../types';
+
+interface Plural {
+  onPullRequestUpdate(_config: BranchConfig, pr: Pr | null): Promise<void>;
+  onDependencyDashboardUpdate(
+    issue: Issue | null,
+    dependencies: Array<PackageDependency>,
+  ): Promise<void>;
+}
 
 interface PluralFile extends PluralFileContent {
   fileName: string;
@@ -82,5 +93,6 @@ export type {
   RegExpGroups,
   PluralFile,
   PluralResource,
+  Plural,
 };
 export { ResourceKind };

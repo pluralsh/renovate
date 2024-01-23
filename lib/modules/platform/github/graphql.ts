@@ -116,6 +116,7 @@ query(
         state
         title
         body
+        url
       }
     }
   }

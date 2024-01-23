@@ -2799,6 +2799,19 @@ const options: RenovateOptions[] = [
     cli: false,
     env: false,
   },
+  {
+    name: 'apiUrl',
+    description:
+      'URL to the API that should be used to call webhooks when certain events occur, i.e. on pr creation',
+    type: 'string',
+    globalOnly: true,
+  },
+  {
+    name: 'apiToken',
+    description: 'Token used to authorize API calls',
+    type: 'string',
+    globalOnly: true,
+  },
 ];
 
 export function getOptions(): RenovateOptions[] {
