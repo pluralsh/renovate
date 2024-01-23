@@ -7,6 +7,8 @@ on:
 jobs:
   bump:
     runs-on: ubuntu-latest
+    outputs:
+      newTag: ${{ steps.version-bump.outputs.newTag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
@@ -39,7 +41,7 @@ jobs:
           images: ghcr.io/pluralsh/plural-renovate
           # generate Docker tags based on the following events/attributes
           tags: |
-            type=semver,pattern={{version}},value=${{ steps.version-bump.outputs.newTag }}
+            type=semver,pattern={{version}},value=${{ jobs.bump.outputs.newTag }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -78,7 +80,7 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          tag_name: ${{ steps.version-bump.outputs.newTag }}
+          tag_name: ${{ jobs.bump.outputs.newTag }}
           generate_release_notes: true
 
       - name: Push Chart to GHCR
@@ -86,7 +88,7 @@ jobs:
         with:
           name: plural-renovate
           repository: pluralsh/renovate
-          tag:  ${{ steps.version-bump.outputs.newTag }}
+          tag:  ${{ jobs.bump.outputs.newTag }}
           registry: ghcr.io
           registry_username: ${{ github.repository_owner }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
