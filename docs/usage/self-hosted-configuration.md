@@ -114,6 +114,14 @@ For example:
 }
 ```
 
+## apiToken
+
+TODO
+
+## apiUrl
+
+TODO
+
 ## autodiscover
 
 When you enable `autodiscover`, by default, Renovate runs on _every_ repository that the bot account can access.
