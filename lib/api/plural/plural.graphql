@@ -1,0 +1,7 @@
+mutation CreatePullRequestPointer($attributes: PullRequestAttributes!) {
+  createPullRequestPointer(attributes: $attributes) {
+    id
+    title
+    insertedAt
+  }
+}

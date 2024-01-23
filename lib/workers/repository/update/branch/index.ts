@@ -16,6 +16,7 @@ import {
 } from '../../../../constants/error-messages';
 import { logger, removeMeta } from '../../../../logger';
 import { getAdditionalFiles } from '../../../../modules/manager/npm/post-update';
+import { plural } from '../../../../modules/manager/plural/callback';
 import { Pr, platform } from '../../../../modules/platform';
 import {
   ensureComment,
@@ -878,6 +879,8 @@ export async function processBranch(
     // Otherwise don't throw here - we don't want to stop the other renovations
     logger.error({ err }, `Error ensuring PR`);
   }
+
+  await plural.onPullRequestUpdate(config, branchPr);
   if (!branchExists) {
     return {
       branchExists: true,

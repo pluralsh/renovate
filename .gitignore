@@ -27,3 +27,15 @@ test/datasource/nuget/_fixtures/obj
 
 # testing
 /docker-compose.yml
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# gql
+graphql.config.yml

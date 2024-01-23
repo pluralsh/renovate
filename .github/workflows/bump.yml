@@ -1,0 +1,39 @@
+name: Bump
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.event.pull_request.draft != true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          os: ${{ runner.os }}
+
+      - name: Build
+        run: yarn build
+
+  bump:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - name: Bumping version
+        uses: jpb06/bump-package@v2.5.12
+        with:
+          major-keywords: BREAKING CHANGE
+          minor-keywords: feat,minor
+          patch-keywords: fix,chore
+          should-default-to-patch: true

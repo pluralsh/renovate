@@ -1,141 +1,93 @@
-name: release
-
+name: Release
 on:
-  repository_dispatch:
-    types: [renovate-release]
-
-  workflow_dispatch:
-    inputs:
-      sha:
-        description: 'Git sha to checkout'
-        required: true
-      version:
-        description: 'Version to release'
-        required: true
-      tag:
-        description: 'Npm dist-tag'
-        default: 'latest'
-        required: false
-
-env:
-  NODE_VERSION: 18
-  GIT_SHA: ${{ github.event.client_payload.sha }}
-  NPM_VERSION: ${{ github.event.client_payload.version }}
-  NPM_TAG: ${{ github.event.client_payload.tag }}
-  RENOVATE_VERSION: ${{ github.event.client_payload.version }}
-  BUILDKIT_PROGRESS: plain
-  BUILDX_NO_DEFAULT_LOAD: 1
-  DOCKER_PLATFORMS: linux/amd64,linux/arm64
-  OWNER: ${{ github.repository_owner }}
-  FILE: renovate
-
-permissions:
-  contents: read
-  id-token: write
+  push:
+    tags:
+      - '*.*.*'
 
 jobs:
-  release-npm:
+  build:
+    needs: setup
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.event.pull_request.draft != true
     steps:
-      - name: Prepare env
-        run: |
-          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
-            echo "GIT_SHA=${{ github.event.inputs.sha }}" >> "$GITHUB_ENV"
-            echo "NPM_VERSION=${{ github.event.inputs.version }}" >> "$GITHUB_ENV"
-            echo "NPM_TAG=${{ github.event.inputs.tag }}" >> "$GITHUB_ENV"
-          fi
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
 
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-        with:
-          ref: ${{ env.GIT_SHA }}
-          show-progress: false
-
-      - name: Enable corepack
-        shell: bash
-        run: corepack enable
-
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
+          os: ${{ runner.os }}
 
-      - name: Init platform
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.symlinks true
-          git config --global user.email 'renovate@whitesourcesoftware.com'
-          git config --global user.name  'Renovate Bot'
+      - name: Build
+        run: yarn build
 
-      - name: Installing dependencies
-        uses: nick-fields/retry@14672906e672a08bd6eeb15720e9ed3ce869cdd4 # v2.9.0
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: pnpm install --frozen-lockfile
-
-      - name: Build ${{ env.NPM_VERSION }}
-        run: pnpm build
-
-      - name: Prepare  ${{ env.NPM_VERSION }}
-        run: |
-          npm --no-git-tag-version version ${{ env.NPM_VERSION }}
-
-      - name: Publish ${{ env.NPM_VERSION }}
-        run: |
-          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> ./.npmrc
-          npm publish --tag ${{ env.NPM_TAG }}
-          git checkout -- .npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  release-docker:
+  publish:
+    name: Build and push Docker container
+    needs: build
     runs-on: ubuntu-latest
-    needs:
-      - release-npm
-
-    permissions:
-      contents: read
-      id-token: write
-      packages: write
-
     steps:
-      - name: Prepare env
-        run: |
-          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
-            echo "GIT_SHA=${{ github.event.inputs.sha }}" >> "$GITHUB_ENV"
-            echo "RENOVATE_VERSION=${{ github.event.inputs.version }}" >> "$GITHUB_ENV"
-          fi
-          echo "OWNER=${OWNER,,}" >> ${GITHUB_ENV}
-
-      - name: docker-config
-        uses: containerbase/internal-tools@9260121e8a5b13c1dc200f952833a3973723ca80 # v3.0.48
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
         with:
-          command: docker-config
+          fetch-depth: 0
 
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
         with:
-          ref: ${{ env.GIT_SHA }}
-          show-progress: false
+          # list of Docker images to use as base name for tags
+          images: ghcr.io/pluralsh/plural-renovate
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=semver,pattern={{version}}
 
-      - uses: sigstore/cosign-installer@9614fae9e5c5eddabb09f90a270fcb487c9f7149 # v3.3.0
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
-      - name: Docker registry login
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Build docker images ${{ env.RENOVATE_VERSION }}
-        run: docker buildx bake --set settings.platform=${{ env.DOCKER_PLATFORMS }} --file tools/docker/bake.hcl build
+      - name: Login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish docker images ${{ env.RENOVATE_VERSION }}
-        if: false
-        run: docker buildx bake --set settings.platform=${{ env.DOCKER_PLATFORMS }} --file tools/docker/bake.hcl push
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: '.'
+          file: './Dockerfile'
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      - name: Sign images
-        if: false
-        run: |
-          cosign sign --yes ghcr.io/${{ env.OWNER }}/${{ env.FILE }}:${{ env.RENOVATE_VERSION }}
-          cosign sign --yes ghcr.io/${{ env.OWNER }}/${{ env.FILE }}:${{ env.RENOVATE_VERSION }}-full
-          cosign sign --yes ${{ env.FILE }}/${{ env.FILE }}:${{ env.RENOVATE_VERSION }}
-          cosign sign --yes ${{ env.FILE }}/${{ env.FILE }}:${{ env.RENOVATE_VERSION }}-full
+  release:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          generate_release_notes: true
+
+      - name: Push Chart to GHCR
+        uses: appany/helm-oci-chart-releaser@v0.3.0
+        with:
+          name: plural-renovate
+          repository: pluralsh/renovate
+          tag: ${{ github.ref }}
+          registry: ghcr.io
+          registry_username: ${{ github.repository_owner }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}

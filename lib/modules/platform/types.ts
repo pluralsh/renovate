@@ -83,6 +83,7 @@ export interface Pr {
   targetBranch?: string;
   title: string;
   isDraft?: boolean;
+  url?: URL;
 }
 
 /**
@@ -93,6 +94,7 @@ export interface Issue {
   number?: number;
   state?: string;
   title?: string;
+  url?: URL;
 }
 export type PlatformPrOptions = {
   autoApprove?: boolean;

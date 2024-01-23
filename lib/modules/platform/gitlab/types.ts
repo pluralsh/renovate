@@ -7,6 +7,8 @@ export interface GitlabIssue {
   labels?: string[];
 
   title: string;
+
+  web_url: URL;
 }
 
 export interface GitlabComment {

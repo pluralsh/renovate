@@ -1,0 +1,21 @@
+{
+  "apiUrl": "https://console.cdaws.onplural.sh/gql",
+
+  "platform": "github",
+  "repositories": ["floreks/cd-renovate"],
+
+  "autodiscover": false,
+  "onboarding": false,
+  "gitAuthor": "Plural Dependency Bot <pluralbot@plural.sh>",
+  "enabledManagers": ["plural"],
+  "requireConfig": "ignored",
+
+  "recreateWhen": "always",
+  "branchConcurrentLimit": 0,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
+
+  "dependencyDashboard": true,
+  "dependencyDashboardApproval": true,
+  "dependencyDashboardTitle": "Plural Dependency Dashboard"
+}
