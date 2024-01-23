@@ -9,7 +9,7 @@ interface Plural {
   onDependencyDashboardUpdate(
     issue: Issue | null,
     dependencies: Array<PackageDependency>,
-  ): Promise<void>;
+  ): void;
 }
 
 interface PluralFile extends PluralFileContent {

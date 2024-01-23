@@ -37,7 +37,7 @@ const plural: Plural = {
       .catch((err) => logger.info(err));
   },
 
-  async onDependencyDashboardUpdate(
+  onDependencyDashboardUpdate(
     issue: Issue | null,
     dependencies: Array<PackageDependency<ServiceDeployment>>,
   ) {

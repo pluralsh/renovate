@@ -4,29 +4,42 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
   /**
    * The `DateTime` scalar type represents a date and time in the UTC
    * timezone. The DateTime appears in a JSON response as an ISO8601 formatted
    * string, including UTC timezone ("Z"). The parsed date and time string will
    * be converted to UTC if there is an offset.
    */
-  DateTime: { input: string; output: string; }
-  Json: { input: any; output: any; }
-  Long: { input: any; output: any; }
-  Map: { input: Record<string, unknown>; output: Record<string, unknown>; }
+  DateTime: { input: string; output: string };
+  Json: { input: any; output: any };
+  Long: { input: any; output: any };
+  Map: { input: Record<string, unknown>; output: Record<string, unknown> };
 };
 
 export type AccessToken = {
@@ -38,7 +51,6 @@ export type AccessToken = {
   token?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
-
 
 export type AccessTokenAuditsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -143,12 +155,10 @@ export type AddonVersion = {
   version?: Maybe<Scalars['String']['output']>;
 };
 
-
 /** the specification of a runtime service at a specific version */
 export type AddonVersionBlockingArgs = {
   kubeVersion: Scalars['String']['input'];
 };
-
 
 /** the specification of a runtime service at a specific version */
 export type AddonVersionReleaseUrlArgs = {
@@ -264,7 +274,7 @@ export enum AuditAction {
   Cancel = 'CANCEL',
   Create = 'CREATE',
   Delete = 'DELETE',
-  Update = 'UPDATE'
+  Update = 'UPDATE',
 }
 
 export type AuditConnection = {
@@ -302,17 +312,17 @@ export enum AuditType {
   Role = 'ROLE',
   Service = 'SERVICE',
   TempToken = 'TEMP_TOKEN',
-  User = 'USER'
+  User = 'USER',
 }
 
 export enum AuthMethod {
   Basic = 'BASIC',
-  Ssh = 'SSH'
+  Ssh = 'SSH',
 }
 
 export enum AutoscalingTarget {
   Deployment = 'DEPLOYMENT',
-  Statefulset = 'STATEFULSET'
+  Statefulset = 'STATEFULSET',
 }
 
 export type AvailableFeatures = {
@@ -396,7 +406,6 @@ export type Build = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type BuildCommandsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -444,7 +453,7 @@ export enum BuildType {
   Dedicated = 'DEDICATED',
   Deploy = 'DEPLOY',
   Destroy = 'DESTROY',
-  Install = 'INSTALL'
+  Install = 'INSTALL',
 }
 
 export type Canary = {
@@ -619,7 +628,6 @@ export type Cluster = {
   writeBindings?: Maybe<Array<Maybe<PolicyBinding>>>;
 };
 
-
 /** a representation of a cluster you can deploy to */
 export type ClusterRevisionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -680,7 +688,7 @@ export enum ClusterDistro {
   Generic = 'GENERIC',
   Gke = 'GKE',
   K3S = 'K3S',
-  Rke = 'RKE'
+  Rke = 'RKE',
 }
 
 export type ClusterEdge = {
@@ -735,7 +743,6 @@ export type ClusterProvider = {
   supportedVersions?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
-
 
 /** a CAPI provider for a cluster, cloud is inferred from name if not provided manually */
 export type ClusterProviderRuntimeServicesArgs = {
@@ -874,7 +881,7 @@ export enum ComponentState {
   Failed = 'FAILED',
   Paused = 'PAUSED',
   Pending = 'PENDING',
-  Running = 'RUNNING'
+  Running = 'RUNNING',
 }
 
 export type ConfigAttributes = {
@@ -946,7 +953,7 @@ export type ConfigurationValidation = {
 
 export enum Conjunction {
   And = 'AND',
-  Or = 'OR'
+  Or = 'OR',
 }
 
 export type ConsoleConfiguration = {
@@ -1150,7 +1157,7 @@ export type DatabaseVolume = {
 export enum Delta {
   Create = 'CREATE',
   Delete = 'DELETE',
-  Update = 'UPDATE'
+  Update = 'UPDATE',
 }
 
 export type Deployment = {
@@ -1277,7 +1284,7 @@ export type GateSpecAttributes = {
 export enum GateState {
   Closed = 'CLOSED',
   Open = 'OPEN',
-  Pending = 'PENDING'
+  Pending = 'PENDING',
 }
 
 export type GateStatusAttributes = {
@@ -1287,7 +1294,7 @@ export type GateStatusAttributes = {
 export enum GateType {
   Approval = 'APPROVAL',
   Job = 'JOB',
-  Window = 'WINDOW'
+  Window = 'WINDOW',
 }
 
 /** the allowed inputs for a deployment agent gate update */
@@ -1342,7 +1349,7 @@ export type GitFile = {
 
 export enum GitHealth {
   Failed = 'FAILED',
-  Pullable = 'PULLABLE'
+  Pullable = 'PULLABLE',
 }
 
 /** a representation of where to pull manifests from git */
@@ -1839,7 +1846,7 @@ export type ManifestNetwork = {
 export enum MatchStrategy {
   All = 'ALL',
   Any = 'ANY',
-  Recursive = 'RECURSIVE'
+  Recursive = 'RECURSIVE',
 }
 
 export type Metadata = {
@@ -2027,7 +2034,7 @@ export type NotificationEdge = {
 
 export enum NotificationStatus {
   Firing = 'FIRING',
-  Resolved = 'RESOLVED'
+  Resolved = 'RESOLVED',
 }
 
 export type ObjectReference = {
@@ -2063,7 +2070,7 @@ export enum Permission {
   Configure = 'CONFIGURE',
   Deploy = 'DEPLOY',
   Operate = 'OPERATE',
-  Read = 'READ'
+  Read = 'READ',
 }
 
 /** a release pipeline, composed of multiple stages each with potentially multiple services */
@@ -2262,7 +2269,6 @@ export type Pod = {
   spec: PodSpec;
   status: PodStatus;
 };
-
 
 export type PodLogsArgs = {
   container: Scalars['String']['input'];
@@ -2559,7 +2565,7 @@ export type RbacAttributes = {
 
 export enum ReadType {
   Build = 'BUILD',
-  Notification = 'NOTIFICATION'
+  Notification = 'NOTIFICATION',
 }
 
 export type Recipe = {
@@ -2841,21 +2847,17 @@ export type RootMutationType = {
   updateUser?: Maybe<User>;
 };
 
-
 export type RootMutationTypeApproveBuildArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeApproveGateArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeCancelBuildArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeCloneServiceArgs = {
   attributes: ServiceCloneAttributes;
@@ -2865,36 +2867,29 @@ export type RootMutationTypeCloneServiceArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootMutationTypeCreateAccessTokenArgs = {
   scopes?: InputMaybe<Array<InputMaybe<ScopeAttributes>>>;
 };
-
 
 export type RootMutationTypeCreateAgentMigrationArgs = {
   attributes: AgentMigrationAttributes;
 };
 
-
 export type RootMutationTypeCreateBuildArgs = {
   attributes: BuildAttributes;
 };
-
 
 export type RootMutationTypeCreateClusterArgs = {
   attributes: ClusterAttributes;
 };
 
-
 export type RootMutationTypeCreateClusterProviderArgs = {
   attributes: ClusterProviderAttributes;
 };
 
-
 export type RootMutationTypeCreateGitRepositoryArgs = {
   attributes: GitAttributes;
 };
-
 
 export type RootMutationTypeCreateGlobalServiceArgs = {
   attributes: GlobalServiceAttributes;
@@ -2903,22 +2898,18 @@ export type RootMutationTypeCreateGlobalServiceArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootMutationTypeCreateGroupArgs = {
   attributes: GroupAttributes;
 };
-
 
 export type RootMutationTypeCreateGroupMemberArgs = {
   groupId: Scalars['ID']['input'];
   userId: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeCreateInviteArgs = {
   attributes: InviteAttributes;
 };
-
 
 export type RootMutationTypeCreatePeerArgs = {
   email?: InputMaybe<Scalars['String']['input']>;
@@ -2926,17 +2917,14 @@ export type RootMutationTypeCreatePeerArgs = {
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootMutationTypeCreatePrAutomationArgs = {
   attributes: PrAutomationAttributes;
 };
-
 
 export type RootMutationTypeCreateProviderCredentialArgs = {
   attributes: ProviderCredentialAttributes;
   name: Scalars['String']['input'];
 };
-
 
 export type RootMutationTypeCreatePullRequestArgs = {
   branch?: InputMaybe<Scalars['String']['input']>;
@@ -2944,32 +2932,26 @@ export type RootMutationTypeCreatePullRequestArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeCreatePullRequestPointerArgs = {
   attributes?: InputMaybe<PullRequestAttributes>;
 };
-
 
 export type RootMutationTypeCreateRoleArgs = {
   attributes: RoleAttributes;
 };
 
-
 export type RootMutationTypeCreateScmConnectionArgs = {
   attributes: ScmConnectionAttributes;
 };
-
 
 export type RootMutationTypeCreateServiceAccountArgs = {
   attributes: ServiceAccountAttributes;
 };
 
-
 export type RootMutationTypeCreateServiceAccountTokenArgs = {
   id: Scalars['ID']['input'];
   scopes?: InputMaybe<Array<InputMaybe<ScopeAttributes>>>;
 };
-
 
 export type RootMutationTypeCreateServiceDeploymentArgs = {
   attributes: ServiceDeploymentAttributes;
@@ -2977,58 +2959,47 @@ export type RootMutationTypeCreateServiceDeploymentArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootMutationTypeCreateUpgradePolicyArgs = {
   attributes: UpgradePolicyAttributes;
 };
-
 
 export type RootMutationTypeCreateWebhookArgs = {
   attributes: WebhookAttributes;
 };
 
-
 export type RootMutationTypeDeleteAccessTokenArgs = {
   token: Scalars['String']['input'];
 };
-
 
 export type RootMutationTypeDeleteCertificateArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
 };
 
-
 export type RootMutationTypeDeleteClusterArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeleteClusterProviderArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeDeleteGitRepositoryArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeleteGlobalServiceArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeDeleteGroupArgs = {
   groupId: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeleteGroupMemberArgs = {
   groupId: Scalars['ID']['input'];
   userId: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeleteJobArgs = {
   name: Scalars['String']['input'];
@@ -3036,21 +3007,17 @@ export type RootMutationTypeDeleteJobArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootMutationTypeDeleteNodeArgs = {
   name: Scalars['String']['input'];
 };
-
 
 export type RootMutationTypeDeletePeerArgs = {
   name: Scalars['String']['input'];
 };
 
-
 export type RootMutationTypeDeletePipelineArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeletePodArgs = {
   name: Scalars['String']['input'];
@@ -3058,51 +3025,41 @@ export type RootMutationTypeDeletePodArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootMutationTypeDeletePrAutomationArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeleteProviderCredentialArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeDeleteRoleArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeleteScmConnectionArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeDeleteServiceDeploymentArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeleteUpgradePolicyArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeDeleteUserArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeDeleteWebhookArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeDetachClusterArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeExecuteRunbookArgs = {
   input: RunbookActionInput;
@@ -3110,11 +3067,9 @@ export type RootMutationTypeExecuteRunbookArgs = {
   namespace: Scalars['String']['input'];
 };
 
-
 export type RootMutationTypeForceGateArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeInstallAddOnArgs = {
   clusterId: Scalars['ID']['input'];
@@ -3123,13 +3078,11 @@ export type RootMutationTypeInstallAddOnArgs = {
   name: Scalars['String']['input'];
 };
 
-
 export type RootMutationTypeInstallRecipeArgs = {
   context: Scalars['Map']['input'];
   id: Scalars['ID']['input'];
   oidc?: InputMaybe<Scalars['Boolean']['input']>;
 };
-
 
 export type RootMutationTypeInstallStackArgs = {
   context: ContextAttributes;
@@ -3137,39 +3090,32 @@ export type RootMutationTypeInstallStackArgs = {
   oidc?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-
 export type RootMutationTypeLoginLinkArgs = {
   key: Scalars['String']['input'];
 };
 
-
 export type RootMutationTypeMarkReadArgs = {
   type?: InputMaybe<ReadType>;
 };
-
 
 export type RootMutationTypeMergeServiceArgs = {
   configuration?: InputMaybe<Array<InputMaybe<ConfigAttributes>>>;
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeOauthCallbackArgs = {
   code: Scalars['String']['input'];
   redirect?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type RootMutationTypeOverlayConfigurationArgs = {
   context: Scalars['Map']['input'];
   namespace: Scalars['String']['input'];
 };
 
-
 export type RootMutationTypePingClusterArgs = {
   attributes: ClusterPing;
 };
-
 
 export type RootMutationTypeProceedArgs = {
   cluster?: InputMaybe<Scalars['String']['input']>;
@@ -3178,17 +3124,14 @@ export type RootMutationTypeProceedArgs = {
   promotion?: InputMaybe<ServicePromotion>;
 };
 
-
 export type RootMutationTypeRegisterRuntimeServicesArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
   services?: InputMaybe<Array<InputMaybe<RuntimeServiceAttributes>>>;
 };
 
-
 export type RootMutationTypeRestartBuildArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeRestorePostgresArgs = {
   clone?: InputMaybe<CloneAttributes>;
@@ -3197,7 +3140,6 @@ export type RootMutationTypeRestorePostgresArgs = {
   timestamp: Scalars['DateTime']['input'];
 };
 
-
 export type RootMutationTypeRollbackServiceArgs = {
   cluster?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -3205,41 +3147,34 @@ export type RootMutationTypeRollbackServiceArgs = {
   revisionId: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeSavePipelineArgs = {
   attributes: PipelineAttributes;
   name: Scalars['String']['input'];
 };
 
-
 export type RootMutationTypeSelfManageArgs = {
   values: Scalars['String']['input'];
 };
-
 
 export type RootMutationTypeSignInArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
-
 export type RootMutationTypeSignupArgs = {
   attributes: UserAttributes;
   inviteId: Scalars['String']['input'];
 };
-
 
 export type RootMutationTypeUpdateClusterArgs = {
   attributes: ClusterUpdateAttributes;
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeUpdateClusterProviderArgs = {
   attributes: ClusterProviderUpdateAttributes;
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeUpdateConfigurationArgs = {
   content: Scalars['String']['input'];
@@ -3248,41 +3183,34 @@ export type RootMutationTypeUpdateConfigurationArgs = {
   tool?: InputMaybe<Tool>;
 };
 
-
 export type RootMutationTypeUpdateDeploymentSettingsArgs = {
   attributes: DeploymentSettingsAttributes;
 };
-
 
 export type RootMutationTypeUpdateGateArgs = {
   attributes: GateUpdateAttributes;
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeUpdateGitRepositoryArgs = {
   attributes: GitAttributes;
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeUpdateGlobalServiceArgs = {
   attributes: GlobalServiceAttributes;
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeUpdateGroupArgs = {
   attributes: GroupAttributes;
   groupId: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeUpdatePrAutomationArgs = {
   attributes: PrAutomationAttributes;
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeUpdateRbacArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
@@ -3291,31 +3219,26 @@ export type RootMutationTypeUpdateRbacArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootMutationTypeUpdateRoleArgs = {
   attributes: RoleAttributes;
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeUpdateScmConnectionArgs = {
   attributes: ScmConnectionAttributes;
   id: Scalars['ID']['input'];
 };
 
-
 export type RootMutationTypeUpdateServiceAccountArgs = {
   attributes: ServiceAccountAttributes;
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeUpdateServiceComponentsArgs = {
   components?: InputMaybe<Array<InputMaybe<ComponentAttributes>>>;
   errors?: InputMaybe<Array<InputMaybe<ServiceErrorAttributes>>>;
   id: Scalars['ID']['input'];
 };
-
 
 export type RootMutationTypeUpdateServiceDeploymentArgs = {
   attributes: ServiceUpdateAttributes;
@@ -3324,11 +3247,9 @@ export type RootMutationTypeUpdateServiceDeploymentArgs = {
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootMutationTypeUpdateSmtpArgs = {
   smtp: SmtpInput;
 };
-
 
 export type RootMutationTypeUpdateUserArgs = {
   attributes: UserAttributes;
@@ -3459,11 +3380,9 @@ export type RootQueryType = {
   wireguardPeers?: Maybe<Array<Maybe<WireguardPeer>>>;
 };
 
-
 export type RootQueryTypeAccessTokenArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootQueryTypeAccessTokensArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3472,16 +3391,13 @@ export type RootQueryTypeAccessTokensArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypeAiArgs = {
   prompt: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypeApplicationArgs = {
   name: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeAuditsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3491,11 +3407,9 @@ export type RootQueryTypeAuditsArgs = {
   repo?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeBuildArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootQueryTypeBuildsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3504,11 +3418,9 @@ export type RootQueryTypeBuildsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypeCachedPodsArgs = {
   namespaces?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
-
 
 export type RootQueryTypeCanaryArgs = {
   name: Scalars['String']['input'];
@@ -3516,26 +3428,22 @@ export type RootQueryTypeCanaryArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypeCertificateArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypeClusterArgs = {
   handle?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypeClusterProviderArgs = {
   cloud?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type RootQueryTypeClusterProvidersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3544,12 +3452,10 @@ export type RootQueryTypeClusterProvidersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypeClusterStatusesArgs = {
   q?: InputMaybe<Scalars['String']['input']>;
   tag?: InputMaybe<TagInput>;
 };
-
 
 export type RootQueryTypeClustersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3562,23 +3468,19 @@ export type RootQueryTypeClustersArgs = {
   tagQuery?: InputMaybe<TagQuery>;
 };
 
-
 export type RootQueryTypeConfigMapArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypeConfigMapsArgs = {
   namespace: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypeConfigurationOverlaysArgs = {
   namespace: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeCronJobArgs = {
   name: Scalars['String']['input'];
@@ -3586,13 +3488,11 @@ export type RootQueryTypeCronJobArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypeDaemonSetArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypeDashboardArgs = {
   labels?: InputMaybe<Array<InputMaybe<LabelInput>>>;
@@ -3602,18 +3502,15 @@ export type RootQueryTypeDashboardArgs = {
   step?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeDashboardsArgs = {
   repo: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeDeploymentArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypeGitRepositoriesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3622,22 +3519,18 @@ export type RootQueryTypeGitRepositoriesArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypeGitRepositoryArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeGlobalServiceArgs = {
   id: Scalars['ID']['input'];
 };
 
-
 export type RootQueryTypeGroupArgs = {
   name: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeGroupMembersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3647,7 +3540,6 @@ export type RootQueryTypeGroupMembersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypeGroupsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3656,19 +3548,16 @@ export type RootQueryTypeGroupsArgs = {
   q?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeHelmRepositoryArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeIngressArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypeInstallationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3677,11 +3566,9 @@ export type RootQueryTypeInstallationsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypeInviteArgs = {
   id: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeJobArgs = {
   name: Scalars['String']['input'];
@@ -3689,16 +3576,13 @@ export type RootQueryTypeJobArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypeLogFiltersArgs = {
   namespace: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypeLoginInfoArgs = {
   redirect?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type RootQueryTypeLogsArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
@@ -3708,7 +3592,6 @@ export type RootQueryTypeLogsArgs = {
   start?: InputMaybe<Scalars['Long']['input']>;
 };
 
-
 export type RootQueryTypeMetricArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3716,28 +3599,23 @@ export type RootQueryTypeMetricArgs = {
   step?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeNamespacesArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypeNodeArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
   name: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypeNodeMetricArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
   name: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypeNodeMetricsArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypeNotificationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3747,11 +3625,9 @@ export type RootQueryTypeNotificationsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypePipelineArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootQueryTypePipelinesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3760,13 +3636,11 @@ export type RootQueryTypePipelinesArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypePluralClusterArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypePluralGitRepositoryArgs = {
   name: Scalars['String']['input'];
@@ -3774,13 +3648,11 @@ export type RootQueryTypePluralGitRepositoryArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypePluralServiceDeploymentArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypePodArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
@@ -3788,7 +3660,6 @@ export type RootQueryTypePodArgs = {
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypePodsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3800,17 +3671,14 @@ export type RootQueryTypePodsArgs = {
   namespaces?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-
 export type RootQueryTypePostgresDatabaseArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypePrAutomationArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootQueryTypePrAutomationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3818,7 +3686,6 @@ export type RootQueryTypePrAutomationsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type RootQueryTypePullRequestsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3829,11 +3696,9 @@ export type RootQueryTypePullRequestsArgs = {
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypeRecipeArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootQueryTypeRecipesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3843,7 +3708,6 @@ export type RootQueryTypeRecipesArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypeRepositoriesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3852,11 +3716,9 @@ export type RootQueryTypeRepositoriesArgs = {
   query: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypeRepositoryArgs = {
   name: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeRolesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3866,23 +3728,19 @@ export type RootQueryTypeRolesArgs = {
   q?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeRunbookArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeRunbooksArgs = {
   namespace: Scalars['String']['input'];
   pinned?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-
 export type RootQueryTypeRuntimeServiceArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootQueryTypeScalingRecommendationArgs = {
   kind: AutoscalingTarget;
@@ -3890,11 +3748,9 @@ export type RootQueryTypeScalingRecommendationArgs = {
   namespace: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypeScmConnectionArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type RootQueryTypeScmConnectionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3903,25 +3759,21 @@ export type RootQueryTypeScmConnectionsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type RootQueryTypeSecretArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypeSecretsArgs = {
   namespace: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeServiceArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypeServiceAccountsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3931,13 +3783,11 @@ export type RootQueryTypeServiceAccountsArgs = {
   q?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeServiceDeploymentArgs = {
   cluster?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type RootQueryTypeServiceDeploymentsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3950,25 +3800,21 @@ export type RootQueryTypeServiceDeploymentsArgs = {
   status?: InputMaybe<ServiceDeploymentStatus>;
 };
 
-
 export type RootQueryTypeServiceStatusesArgs = {
   clusterId?: InputMaybe<Scalars['ID']['input']>;
   q?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<ServiceDeploymentStatus>;
 };
 
-
 export type RootQueryTypeStackArgs = {
   name: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeStatefulSetArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootQueryTypeTagPairsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3979,16 +3825,13 @@ export type RootQueryTypeTagPairsArgs = {
   tag?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeTagsArgs = {
   tag?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeTokenExchangeArgs = {
   token: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeUnstructuredResourceArgs = {
   group?: InputMaybe<Scalars['String']['input']>;
@@ -3999,18 +3842,15 @@ export type RootQueryTypeUnstructuredResourceArgs = {
   version: Scalars['String']['input'];
 };
 
-
 export type RootQueryTypeUpgradePlanArgs = {
   name: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
   serviceId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type RootQueryTypeUserArgs = {
   email: Scalars['String']['input'];
 };
-
 
 export type RootQueryTypeUsersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -4020,14 +3860,12 @@ export type RootQueryTypeUsersArgs = {
   q?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type RootQueryTypeWebhooksArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type RootQueryTypeWireguardPeerArgs = {
   name: Scalars['String']['input'];
@@ -4042,11 +3880,9 @@ export type RootSubscriptionType = {
   podDelta?: Maybe<PodDelta>;
 };
 
-
 export type RootSubscriptionTypeBuildDeltaArgs = {
   buildId?: InputMaybe<Scalars['ID']['input']>;
 };
-
 
 export type RootSubscriptionTypeCommandDeltaArgs = {
   buildId: Scalars['ID']['input'];
@@ -4061,11 +3897,9 @@ export type Runbook = {
   status?: Maybe<RunbookStatus>;
 };
 
-
 export type RunbookDataArgs = {
   context?: InputMaybe<RunbookContext>;
 };
-
 
 export type RunbookExecutionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -4178,7 +4012,6 @@ export type RuntimeAddon = {
   versions?: Maybe<Array<Maybe<AddonVersion>>>;
 };
 
-
 /** a full specification of a kubernetes runtime component's requirements */
 export type RuntimeAddonReleaseUrlArgs = {
   version: Scalars['String']['input'];
@@ -4246,7 +4079,7 @@ export type ScmConnectionEdge = {
 
 export enum ScmType {
   Github = 'GITHUB',
-  Gitlab = 'GITLAB'
+  Gitlab = 'GITLAB',
 }
 
 export type ScopeAttributes = {
@@ -4396,7 +4229,6 @@ export type ServiceDeployment = {
   writeBindings?: Maybe<Array<Maybe<PolicyBinding>>>;
 };
 
-
 /** a reference to a service deployed from a git repo into a cluster */
 export type ServiceDeploymentRevisionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -4440,7 +4272,7 @@ export enum ServiceDeploymentStatus {
   Healthy = 'HEALTHY',
   Paused = 'PAUSED',
   Stale = 'STALE',
-  Synced = 'SYNCED'
+  Synced = 'SYNCED',
 }
 
 /** an error sent from the deploy operator about sync progress */
@@ -4466,7 +4298,7 @@ export type ServicePort = {
 export enum ServicePromotion {
   Ignore = 'IGNORE',
   Proceed = 'PROCEED',
-  Rollback = 'ROLLBACK'
+  Rollback = 'ROLLBACK',
 }
 
 export type ServiceSpec = {
@@ -4505,7 +4337,7 @@ export enum Severity {
   High = 'HIGH',
   Low = 'LOW',
   Medium = 'MEDIUM',
-  None = 'NONE'
+  None = 'NONE',
 }
 
 export type Smtp = {
@@ -4588,7 +4420,7 @@ export enum Status {
   Pending = 'PENDING',
   Queued = 'QUEUED',
   Running = 'RUNNING',
-  Successful = 'SUCCESSFUL'
+  Successful = 'SUCCESSFUL',
 }
 
 export type StatusComponent = {
@@ -4683,7 +4515,7 @@ export type TerminatedState = {
 
 export enum Tool {
   Helm = 'HELM',
-  Terraform = 'TERRAFORM'
+  Terraform = 'TERRAFORM',
 }
 
 export type UpgradePlan = {
@@ -4733,7 +4565,7 @@ export type UpgradePolicyAttributes = {
 export enum UpgradePolicyType {
   Approval = 'APPROVAL',
   Deploy = 'DEPLOY',
-  Ignore = 'IGNORE'
+  Ignore = 'IGNORE',
 }
 
 export type User = {
@@ -4849,12 +4681,12 @@ export type WebhookEdge = {
 
 export enum WebhookHealth {
   Healthy = 'HEALTHY',
-  Unhealthy = 'UNHEALTHY'
+  Unhealthy = 'UNHEALTHY',
 }
 
 export enum WebhookType {
   Piazza = 'PIAZZA',
-  Slack = 'SLACK'
+  Slack = 'SLACK',
 }
 
 export type WireguardPeer = {
@@ -4884,29 +4716,47 @@ export type ServicesQueryVariables = Exact<{
   cluster: Scalars['String']['input'];
 }>;
 
-
-export type ServicesQuery = { __typename?: 'RootQueryType', serviceDeployments?: { __typename?: 'ServiceDeploymentConnection', edges?: Array<{ __typename?: 'ServiceDeploymentEdge', node?: { __typename?: 'ServiceDeployment', id: string, name: string } | null } | null> | null } | null };
+export type ServicesQuery = {
+  __typename?: 'RootQueryType';
+  serviceDeployments?: {
+    __typename?: 'ServiceDeploymentConnection';
+    edges?: Array<{
+      __typename?: 'ServiceDeploymentEdge';
+      node?: {
+        __typename?: 'ServiceDeployment';
+        id: string;
+        name: string;
+      } | null;
+    } | null> | null;
+  } | null;
+};
 
 export type CreatePullRequestPointerMutationVariables = Exact<{
   attributes: PullRequestAttributes;
 }>;
 
-
-export type CreatePullRequestPointerMutation = { __typename?: 'RootMutationType', createPullRequestPointer?: { __typename?: 'PullRequest', id: string, title?: string | null, insertedAt?: string | null } | null };
-
+export type CreatePullRequestPointerMutation = {
+  __typename?: 'RootMutationType';
+  createPullRequestPointer?: {
+    __typename?: 'PullRequest';
+    id: string;
+    title?: string | null;
+    insertedAt?: string | null;
+  } | null;
+};
 
 export const ServicesDocument = gql`
-    query Services($cluster: String!) {
-  serviceDeployments(cluster: $cluster, first: 50) {
-    edges {
-      node {
-        id
-        name
+  query Services($cluster: String!) {
+    serviceDeployments(cluster: $cluster, first: 50) {
+      edges {
+        node {
+          id
+          name
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useServicesQuery__
@@ -4924,32 +4774,63 @@ export const ServicesDocument = gql`
  *   },
  * });
  */
-export function useServicesQuery(baseOptions: Apollo.QueryHookOptions<ServicesQuery, ServicesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ServicesQuery, ServicesQueryVariables>(ServicesDocument, options);
-      }
-export function useServicesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ServicesQuery, ServicesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ServicesQuery, ServicesQueryVariables>(ServicesDocument, options);
-        }
-export function useServicesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ServicesQuery, ServicesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ServicesQuery, ServicesQueryVariables>(ServicesDocument, options);
-        }
-export type ServicesQueryHookResult = ReturnType<typeof useServicesQuery>;
-export type ServicesLazyQueryHookResult = ReturnType<typeof useServicesLazyQuery>;
-export type ServicesSuspenseQueryHookResult = ReturnType<typeof useServicesSuspenseQuery>;
-export type ServicesQueryResult = Apollo.QueryResult<ServicesQuery, ServicesQueryVariables>;
-export const CreatePullRequestPointerDocument = gql`
-    mutation CreatePullRequestPointer($attributes: PullRequestAttributes!) {
-  createPullRequestPointer(attributes: $attributes) {
-    id
-    title
-    insertedAt
-  }
+export function useServicesQuery(
+  baseOptions: Apollo.QueryHookOptions<ServicesQuery, ServicesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ServicesQuery, ServicesQueryVariables>(
+    ServicesDocument,
+    options,
+  );
 }
-    `;
-export type CreatePullRequestPointerMutationFn = Apollo.MutationFunction<CreatePullRequestPointerMutation, CreatePullRequestPointerMutationVariables>;
+export function useServicesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ServicesQuery,
+    ServicesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ServicesQuery, ServicesQueryVariables>(
+    ServicesDocument,
+    options,
+  );
+}
+export function useServicesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    ServicesQuery,
+    ServicesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<ServicesQuery, ServicesQueryVariables>(
+    ServicesDocument,
+    options,
+  );
+}
+export type ServicesQueryHookResult = ReturnType<typeof useServicesQuery>;
+export type ServicesLazyQueryHookResult = ReturnType<
+  typeof useServicesLazyQuery
+>;
+export type ServicesSuspenseQueryHookResult = ReturnType<
+  typeof useServicesSuspenseQuery
+>;
+export type ServicesQueryResult = Apollo.QueryResult<
+  ServicesQuery,
+  ServicesQueryVariables
+>;
+export const CreatePullRequestPointerDocument = gql`
+  mutation CreatePullRequestPointer($attributes: PullRequestAttributes!) {
+    createPullRequestPointer(attributes: $attributes) {
+      id
+      title
+      insertedAt
+    }
+  }
+`;
+export type CreatePullRequestPointerMutationFn = Apollo.MutationFunction<
+  CreatePullRequestPointerMutation,
+  CreatePullRequestPointerMutationVariables
+>;
 
 /**
  * __useCreatePullRequestPointerMutation__
@@ -4968,18 +4849,33 @@ export type CreatePullRequestPointerMutationFn = Apollo.MutationFunction<CreateP
  *   },
  * });
  */
-export function useCreatePullRequestPointerMutation(baseOptions?: Apollo.MutationHookOptions<CreatePullRequestPointerMutation, CreatePullRequestPointerMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreatePullRequestPointerMutation, CreatePullRequestPointerMutationVariables>(CreatePullRequestPointerDocument, options);
-      }
-export type CreatePullRequestPointerMutationHookResult = ReturnType<typeof useCreatePullRequestPointerMutation>;
-export type CreatePullRequestPointerMutationResult = Apollo.MutationResult<CreatePullRequestPointerMutation>;
-export type CreatePullRequestPointerMutationOptions = Apollo.BaseMutationOptions<CreatePullRequestPointerMutation, CreatePullRequestPointerMutationVariables>;
+export function useCreatePullRequestPointerMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreatePullRequestPointerMutation,
+    CreatePullRequestPointerMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreatePullRequestPointerMutation,
+    CreatePullRequestPointerMutationVariables
+  >(CreatePullRequestPointerDocument, options);
+}
+export type CreatePullRequestPointerMutationHookResult = ReturnType<
+  typeof useCreatePullRequestPointerMutation
+>;
+export type CreatePullRequestPointerMutationResult =
+  Apollo.MutationResult<CreatePullRequestPointerMutation>;
+export type CreatePullRequestPointerMutationOptions =
+  Apollo.BaseMutationOptions<
+    CreatePullRequestPointerMutation,
+    CreatePullRequestPointerMutationVariables
+  >;
 export const namedOperations = {
   Query: {
-    Services: 'Services'
+    Services: 'Services',
   },
   Mutation: {
-    CreatePullRequestPointer: 'CreatePullRequestPointer'
-  }
-}
+    CreatePullRequestPointer: 'CreatePullRequestPointer',
+  },
+};
