@@ -1,8 +1,8 @@
 name: Release
 on:
   push:
-    tags:
-      - '*.*.*'
+    branches:
+      - main
 
 jobs:
   setup:
@@ -104,9 +104,26 @@ jobs:
       - name: Build
         run: yarn build
 
+  bump:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - name: Bump version
+        id: version-bump
+        uses: phips28/gh-action-bump-version@v10.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          major-wording: BREAKING CHANGE
+          minor-wording: feat,minor
+          patch-wording: fix,chore
+
   publish:
     name: Build and push Docker container
-    needs: build
+    needs: bump
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -122,7 +139,7 @@ jobs:
           images: ghcr.io/pluralsh/plural-renovate
           # generate Docker tags based on the following events/attributes
           tags: |
-            type=semver,pattern={{version}}
+            type=semver,pattern={{version}},value=${{ steps.version-bump.outputs.newTag }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -161,6 +178,7 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v0.1.15
         with:
+          tag_name: ${{ steps.version-bump.outputs.newTag }}
           generate_release_notes: true
 
       - name: Push Chart to GHCR
@@ -168,7 +186,7 @@ jobs:
         with:
           name: plural-renovate
           repository: pluralsh/renovate
-          tag: ${{ github.ref }}
+          tag:  ${{ steps.version-bump.outputs.newTag }}
           registry: ghcr.io
           registry_username: ${{ github.repository_owner }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
