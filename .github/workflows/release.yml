@@ -24,7 +24,6 @@ jobs:
           patch-wording: fix,chore
 
   publish:
-    name: Build and push Docker container
     needs: bump
     runs-on: ubuntu-latest
     steps:
@@ -69,7 +68,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   release:
-    needs: publish
+    needs: bump
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
