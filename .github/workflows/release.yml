@@ -88,6 +88,7 @@ jobs:
           name: plural-renovate-chart
           repository: pluralsh
           tag:  ${{ needs.bump.outputs.newTag }}
+          path: charts/plural-renovate
           registry: ghcr.io
           registry_username: ${{ github.repository_owner }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
