@@ -44,6 +44,8 @@ install:
 		--install \
 		--set config.renovate.token=${RENOVATE_TOKEN} \
 		--set config.plural.token=${RENOVATE_API_TOKEN} \
+		--set config.renovate.repositories={"floreks/cd-renovate"} \
+		--set config.renovate.apiUrl="https://console.cdaws.onplural.sh/gql" \
 		plural-renovate \
 		charts/plural-renovate
 
@@ -54,4 +56,4 @@ install-oci:
 		--install \
 		plural-renovate \
 		oci://ghcr.io/pluralsh/plural-renovate \
-    --version 1.0.1-helm
+    --version 1.0.3-helm

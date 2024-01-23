@@ -8,10 +8,12 @@ config:
   restartPolicy: "Never"
   # Cron schedule: run once every 30 minutes
   # Create your own schedule with: https://crontab.guru/
-  schedule: 1/2 * * * *
+  schedule: 30 * * * *
+  #
+  renovateConfigFileDir: /config
+  renovateConfigFileName: config.json
   # Renovate configuration
   renovate:
-    configFile: /config/config.json
     # Platform to use, i.e.: github, gitlab, etc.
     platform: "github"
     #
@@ -42,6 +44,8 @@ config:
     prConcurrentLimit: 0
     #
     prHourlyLimit: 0
+    #
+    apiUrl: ""
   # Plural integration configuration
   plural:
     # Plural API token

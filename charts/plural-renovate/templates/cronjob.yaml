@@ -9,16 +9,16 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        {{- include "renovate.labels" . | nindent 4 }}
+        {{- include "renovate.labels" . | nindent 8 }}
     spec:
       template:
         metadata:
           {{- with .Values.podAnnotations }}
           annotations:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           labels:
-            {{- include "renovate.selectorLabels" . | nindent 8 }}
+            {{- include "renovate.selectorLabels" . | nindent 12 }}
         spec:
           restartPolicy: {{ .Values.config.restartPolicy }}
           {{- with .Values.imagePullSecrets }}
@@ -47,7 +47,11 @@ spec:
                   port: http
               volumeMounts:
                 - name: config
-                  mountPath: /config
+                  mountPath: {{ .Values.config.renovateConfigFileDir }}/{{ .Values.config.renovateConfigFileName }}
+                  subPath: {{ .Values.config.renovateConfigFileName }}
+              env:
+                - name: RENOVATE_CONFIG_FILE
+                  value: {{ .Values.config.renovateConfigFileDir }}/{{ .Values.config.renovateConfigFileName }}
               envFrom:
                 - secretRef:
                     name: {{ include "renovate.fullname" . }}
@@ -59,6 +63,9 @@ spec:
             - name: config
               configMap:
                 name: {{ include "renovate.fullname" . }}
+                items:
+                  - key: {{ .Values.config.renovateConfigFileName }}
+                    path: {{ .Values.config.renovateConfigFileName }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 8 }}
