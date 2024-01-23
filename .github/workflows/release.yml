@@ -85,8 +85,8 @@ jobs:
       - name: Push Chart to GHCR
         uses: appany/helm-oci-chart-releaser@v0.3.0
         with:
-          name: plural-renovate
-          repository: pluralsh/renovate
+          name: plural-renovate-chart
+          repository: pluralsh
           tag:  ${{ needs.bump.outputs.newTag }}
           registry: ghcr.io
           registry_username: ${{ github.repository_owner }}
