@@ -775,6 +775,7 @@ export async function getPr(iid: number): Promise<GitlabPr> {
     title: mr.title,
     labels: mr.labels,
     sha: mr.sha,
+    url: mr.web_url,
   };
 
   return massagePr(pr);
@@ -1073,7 +1074,11 @@ export async function findIssue(title: string): Promise<Issue | null> {
     if (!issue) {
       return null;
     }
-    return { ...{ url: issue.web_url }, ...(await getIssue(issue.iid)) };
+    return {
+      ...issue,
+      url: issue.web_url,
+      ...(await getIssue(issue.iid)),
+    };
   } catch (err) /* istanbul ignore next */ {
     logger.warn('Error finding issue');
     return null;

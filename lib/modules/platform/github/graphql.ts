@@ -117,6 +117,7 @@ query(
         state
         title
         body
+        bodyUrl
         url
       }
     }

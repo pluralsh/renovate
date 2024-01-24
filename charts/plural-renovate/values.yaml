@@ -17,6 +17,8 @@ config:
     # Platform to use, i.e.: github, gitlab, etc.
     platform: "github"
     #
+    endpoint: ""
+    #
     repositories: []
     #
     autodiscover: false
@@ -37,21 +39,11 @@ config:
     #
     token: ""
     #
-    recreateWhen: "always"
-    #
-    branchConcurrentLimit: 0
-    #
-    prConcurrentLimit: 0
-    #
-    prHourlyLimit: 0
-    #
     apiUrl: ""
   # Plural integration configuration
   plural:
     # Plural API token
     token: ""
-    # Plural API url
-    url: ""
 
 imagePullSecrets: []
 nameOverride: ""

@@ -50,6 +50,8 @@ const plural: Plural = {
       return;
     }
 
+    logger.info(issue.url?.toString() ?? '');
+
     logger.debug(issue);
     logger.debug(
       dependencies.map((dep) => ({

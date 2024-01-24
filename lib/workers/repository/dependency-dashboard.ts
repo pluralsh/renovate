@@ -475,7 +475,7 @@ export async function ensureDependencyDashboard(
     });
   }
 
-  await plural.onDependencyDashboardUpdate(
+  plural.onDependencyDashboardUpdate(
     await platform.findIssue(config.dependencyDashboardTitle!),
     branches as Array<PackageDependency>,
   );

@@ -1,5 +1,6 @@
 {
   "apiUrl": "https://console.cdaws.onplural.sh/gql",
+  "dryRun": "full",
 
   "platform": "github",
   "repositories": ["floreks/cd-renovate"],

@@ -38,6 +38,7 @@ export interface GitLabMergeRequest {
   head_pipeline?: {
     status: string;
   };
+  web_url?: URL;
 }
 
 export interface GitlabPr extends Pr {

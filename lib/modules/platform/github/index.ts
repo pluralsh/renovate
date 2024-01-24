@@ -33,8 +33,8 @@ import type {
   LongCommitSha,
 } from '../../../util/git/types';
 import * as hostRules from '../../../util/host-rules';
-import * as githubHttp from '../../../util/http/github';
 import type { GithubHttpOptions } from '../../../util/http/github';
+import * as githubHttp from '../../../util/http/github';
 import type {
   HttpResponse,
   InternalHttpOptions,
@@ -1107,6 +1107,7 @@ async function getStatusCheck(
 interface GithubToRenovateStatusMapping {
   [index: string]: BranchStatus;
 }
+
 const githubToRenovateStatusMapping: GithubToRenovateStatusMapping = {
   success: 'green',
   error: 'red',
