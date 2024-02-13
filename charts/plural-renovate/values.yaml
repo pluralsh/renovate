@@ -8,7 +8,7 @@ config:
   restartPolicy: "Never"
   # Cron schedule: run once every 30 minutes
   # Create your own schedule with: https://crontab.guru/
-  schedule: 30 * * * *
+  schedule: 0/30 * * * *
   #
   renovateConfigFileDir: /config
   renovateConfigFileName: config.json
