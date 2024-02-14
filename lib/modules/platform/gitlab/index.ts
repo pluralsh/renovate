@@ -726,24 +726,24 @@ export async function createPr({
   }
   const description = sanitize(rawDescription);
   logger.debug(`Creating Merge Request: ${title}`);
-  const res = await gitlabApi.postJson<Pr & { iid: number; web_url: URL }>(
-    `projects/${config.repository}/merge_requests`,
-    {
-      body: {
-        source_branch: sourceBranch,
-        target_branch: targetBranch,
-        remove_source_branch: true,
-        title,
-        description,
-        labels: (labels ?? []).join(','),
-        squash: config.squash,
-      },
+  const res = await gitlabApi.postJson<
+    Pr & { iid: number; web_url: URL; author_username: string }
+  >(`projects/${config.repository}/merge_requests`, {
+    body: {
+      source_branch: sourceBranch,
+      target_branch: targetBranch,
+      remove_source_branch: true,
+      title,
+      description,
+      labels: (labels ?? []).join(','),
+      squash: config.squash,
     },
-  );
+  });
   const pr = res.body;
   pr.number = pr.iid;
   pr.sourceBranch = sourceBranch;
   pr.url = pr.web_url;
+  pr.creator = pr.author_username;
   // istanbul ignore if
   if (config.prList) {
     config.prList.push(pr);
@@ -776,6 +776,7 @@ export async function getPr(iid: number): Promise<GitlabPr> {
     labels: mr.labels,
     sha: mr.sha,
     url: mr.web_url,
+    creator: mr.author_username,
   };
 
   return massagePr(pr);

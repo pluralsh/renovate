@@ -19,6 +19,7 @@ export function coerceRestPr(pr: GhRestPr): GhPr {
     bodyStruct,
     updated_at: pr.updated_at,
     node_id: pr.node_id,
+    creator: pr.user?.login,
   };
 
   if (pr.head?.sha) {

@@ -84,6 +84,7 @@ export interface Pr {
   title: string;
   isDraft?: boolean;
   url?: URL;
+  creator?: string;
 }
 
 /**

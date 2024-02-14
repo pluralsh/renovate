@@ -20,6 +20,22 @@ const plural: Plural = {
       return;
     }
 
+    const service = config.managerData as ServiceDeployment;
+    const attributes = {
+      url: getLink(pr),
+      title: pr.title,
+      labels: pr.labels,
+      creator: pr.creator,
+      service: {
+        name: service.metadata.name,
+        namespace: service.metadata.namespace,
+      },
+      cluster: {
+        name: service.spec.clusterRef?.name,
+        namespace: service.spec.clusterRef?.namespace,
+      },
+    };
+
     const client = useClient(config);
     await client
       .mutate<
@@ -27,12 +43,7 @@ const plural: Plural = {
         CreatePullRequestPointerMutationVariables
       >({
         mutation: CreatePullRequestPointerDocument,
-        variables: {
-          attributes: {
-            url: getLink(pr),
-            title: pr.title,
-          },
-        },
+        variables: { attributes },
       })
       .catch((err) => logger.info(err));
   },
@@ -49,8 +60,6 @@ const plural: Plural = {
       );
       return;
     }
-
-    logger.info(issue.url?.toString() ?? '');
 
     logger.debug(issue);
     logger.debug(

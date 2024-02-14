@@ -39,6 +39,7 @@ export interface GitLabMergeRequest {
     status: string;
   };
   web_url?: URL;
+  author_username?: string;
 }
 
 export interface GitlabPr extends Pr {
