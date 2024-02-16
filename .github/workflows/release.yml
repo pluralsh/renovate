@@ -37,7 +37,9 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           # list of Docker images to use as base name for tags
-          images: ghcr.io/pluralsh/plural-renovate
+          images: |
+            ghcr.io/pluralsh/plural-renovate
+            docker.io/pluralsh/plural-renovate
           # generate Docker tags based on the following events/attributes
           tags: |
             type=semver,pattern={{version}},value=${{ needs.bump.outputs.newTag }}
@@ -54,7 +56,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Login to Docker
+        uses: docker/login-action@v3
+        with:
+          username: mjgpluralsh
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
