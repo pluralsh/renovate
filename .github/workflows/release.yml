@@ -89,7 +89,7 @@ jobs:
           generate_release_notes: true
 
       - name: Push Chart to GHCR
-        uses: appany/helm-oci-chart-releaser@v0.3.0
+        uses: appany/helm-oci-chart-releaser@dd0551c15abe174eb57824ecde62e976091094da # v0.4.2
         with:
           name: plural-renovate
           repository: pluralsh
