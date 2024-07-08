@@ -1928,12 +1928,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cdktf/hcl2json@npm:0.20.1":
-  version: 0.20.1
-  resolution: "@cdktf/hcl2json@npm:0.20.1"
+"@cdktf/hcl2json@npm:0.20.8":
+  version: 0.20.8
+  resolution: "@cdktf/hcl2json@npm:0.20.8"
   dependencies:
     fs-extra: "npm:11.2.0"
-  checksum: c73cf779665968db2f76693f07b39a7c9a5d47d38c04b3fd119fa4a73822a4acb8ff584c5ffb1d2048a8f30b53fb3f1560c81244a1a23075939382f29d747726
+  checksum: 9706cb72652fd832e7fbc85a37b8b0503ccdd11994c7930515387cc293c48e36c74bc6b75f54875f0641660648f066cde0d3a82efd3201fcc1c47d0234152af8
   languageName: node
   linkType: hard
 
@@ -12475,7 +12475,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:3.363.0"
     "@aws-sdk/credential-providers": "npm:3.363.0"
     "@breejs/later": "npm:4.2.0"
-    "@cdktf/hcl2json": "npm:0.20.1"
+    "@cdktf/hcl2json": "npm:0.20.8"
     "@graphql-codegen/add": "npm:5.0.0"
     "@graphql-codegen/cli": "npm:5.0.0"
     "@graphql-codegen/introspection": "npm:4.0.0"
